@@ -15,7 +15,7 @@ export default async({ weather, news, date, url }: discordArgs) => {
   const today = new Date().toLocaleDateString().replace(/\. /g, '-').replace('.', '');
 
   let message: any = {
-    username: '편지봇',
+    username: '부관',
     avatar_url: 'https://cdn.discordapp.com/attachments/683175932873539589/689459371151065088/message-3592640_1280.jpg',
     
     content:  `📨 ${today} 편지가 왔어요!`,
@@ -32,7 +32,7 @@ export default async({ weather, news, date, url }: discordArgs) => {
         inline: true
       },
       {
-        name: '🏞️ 날씨 / 부산',
+        name: '🏞️ 날씨 / 목포',
         value: weather.weather,
         inline: true
       },
@@ -43,7 +43,7 @@ export default async({ weather, news, date, url }: discordArgs) => {
       }
     ],
     footer: {
-      text: '제작자 : 재웜',
+      text: '',
       icon_url: 'https://images-ext-2.discordapp.net/external/GyQicPLz_zQO15bOMtiGTtC4Kud7JjQbs1Ecuz7RrtU/https/cdn.discordapp.com/embed/avatars/1.png'
     },
   });
