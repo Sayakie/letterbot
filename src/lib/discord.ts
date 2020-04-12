@@ -16,7 +16,7 @@ export default async({ weather, news, date, url }: discordArgs) => {
 
   let message: any = {
     username: '부관',
-    avatar_url: 'https://cdn.discordapp.com/attachments/683175932873539589/689459371151065088/message-3592640_1280.jpg',
+    avatar_url: 'https://raw.githubusercontent.com/Sayakie/letterbot/master/FB_IMG_1580711421750.jpg',
     
     content:  `📨 ${today} 편지가 왔어요!`,
 
