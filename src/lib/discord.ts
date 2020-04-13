@@ -37,7 +37,7 @@ export default async({ weather, news, date, url }: discordArgs) => {
         inline: true
       },
       {
-        name: '🌡 온도 / 부산',
+        name: '🌡 온도 / 목포',
         value: weather.temp,
         inline: true
       }
