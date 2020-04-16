@@ -17,20 +17,12 @@ import * as core from '@actions/core'
 import axios from 'axios'
 import cheerio from 'cheerio'
 
-interface Error {
-  stack?: string[]
-}
-
-process.on('uncaughtException', error => {
+process.on('uncaughtException', (error: any) => {
   throw new Error(`Uncaught exception occured! Details in: ${error.stack || error}`)
 })
-process.on('unhandledRejection', (error: Error) => {
+process.on('unhandledRejection', (error: any) => {
   throw new Error(`Unhandled rejection occured! Details in: ${error.stack || error}`)
 })
-
-function isArray(arrayLike: T): arrayLike is T[] {
-  return (<T[]>arrayLike).join !== undefined
-}
 
 const weatherUrl = 'http://api.openweathermap.org/data/2.5/weather'
 const weatherMatchData = {
@@ -149,7 +141,7 @@ try {
   })()
 
   WEBHOOKS.map(async (hookUrl: string) => {
-    const today = new Date().toLocaleDateString('ko-KR', { timeZone: 'Asia/Seoul' }).split(/.?\s/).map((s: string) => s.padStart(2, 0))
+    const today = new Date().toLocaleDateString('ko-KR', { timeZone: 'Asia/Seoul' }).split(/.?\s/).map((s: string) => s.padStart(2, '0'))
 
     if (hookUrl.includes('discordapp.com')) {
       const message: any = {
