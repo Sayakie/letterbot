@@ -32,7 +32,7 @@ import slack from './lib/slack';
   });
 
   console.log('✅ 웹훅 발송 완료');
-  console.log(`주입된 인자 ----- API: ${process.env.WEATHER_API_KEY} || WEBHOOKS: ${process.env.WEBHOOKS.split(',').join(' ')}`);
+  console.log(`주입된 인자 ----- API: ${process.env.WEATHER_API_KEY} || WEBHOOKS: ${(<string>process.env.WEBHOOKS).split(',').join(' ')}`);
 })().catch(e => {
   console.error(e);
   core.setFailed(e);
