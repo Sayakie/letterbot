@@ -109,7 +109,7 @@ try {
 
   const WEBHOOKS = rawWEBHOOKS.trim().split(',')
   // @ts-ignore
-  const result = []
+  const result = [];
 
   (async () => {
     // Parse weather data
