@@ -103,15 +103,15 @@ const weatherMatchData = {
 
 const googleNewsUrl = 'https://news.google.com/rss?hl=ko&gl=KR&ceid=KR:ko'
 
-try {
-  const { WEBHOOKS: rawWEBHOOKS, WEATHER_API_KEY } = process.env
-  if (rawWEBHOOKS == null) throw new ReferenceError('❌ Could not find webhook list!')
+(async () => {
+  try {
+    const { WEBHOOKS: rawWEBHOOKS, WEATHER_API_KEY } = process.env
+    if (rawWEBHOOKS == null) throw new ReferenceError('❌ Could not find webhook list!')
 
-  const WEBHOOKS = rawWEBHOOKS.trim().split(',')
-  // @ts-ignore
-  const result: any[] = [];
+    const WEBHOOKS = rawWEBHOOKS.trim().split(',')
+    // @ts-ignore
+    const result: any[] = [];
 
-  (async () => {
     // Parse weather data
     const weatherResponse = await axios.get(`${weatherUrl}?q=${config.cityName}&appid=${WEATHER_API_KEY}&units=metric`)
     const weatherRawData = weatherResponse.data
@@ -138,40 +138,40 @@ try {
 
     result.push(content)
     console.log('✅ Parsed google news data successfully.')
-  })()
 
-  WEBHOOKS.map(async (hookUrl: string) => {
-    const today = new Date().toLocaleDateString('ko-KR', { timeZone: 'Asia/Seoul' }).replace(/\./g, '').split(/\s/).map((s: string) => s.padStart(2, '0'))
+    WEBHOOKS.map(async (hookUrl: string) => {
+      const today = new Date().toLocaleDateString('ko-KR', { timeZone: 'Asia/Seoul' }).replace(/\./g, '').split(/\s/).map((s: string) => s.padStart(2, '0'))
 
-    if (hookUrl.includes('discordapp.com')) {
-      const message: any = {
-        username: '부관',
-        avatar_url: 'https://i.imgur.com/diJEYhI.jpg',
-        embeds: []
-      }
+      if (hookUrl.includes('discordapp.com')) {
+        const message: any = {
+          username: '부관',
+          avatar_url: 'https://i.imgur.com/diJEYhI.jpg',
+          embeds: []
+        }
 
-      console.log(JSON.stringify(result, null, 2))
-      message.embeds.push({
-        color: config.embedColor,
-        description: `좋은 아침입니다, 사령관님. ${today[0]}년 ${today[1]}월 ${today[2]}일 보고입니다.`,
-        fields: [{
-          name: `🏞️ 날씨 / ${config.cityLocaleName}`,
-          value: result[0].weather,
-          inline: true
-        }, {
-          name: `🌡 온도 / ${config.cityLocaleName}`,
-          value: result[0].temperature,
-          inline: true
-        }, {
-          name: '📰 뉴스 / 구글',
-          value: result[1]
-        }]
-      })
+        console.log(JSON.stringify(result, null, 2))
+        message.embeds.push({
+          color: config.embedColor,
+          description: `좋은 아침입니다, 사령관님. ${today[0]}년 ${today[1]}월 ${today[2]}일 보고입니다.`,
+          fields: [{
+            name: `🏞️ 날씨 / ${config.cityLocaleName}`,
+            value: result[0].weather,
+            inline: true
+          }, {
+            name: `🌡 온도 / ${config.cityLocaleName}`,
+            value: result[0].temperature,
+            inline: true
+          }, {
+            name: '📰 뉴스 / 구글',
+            value: result[1]
+          }]
+        })
       
       await axios.post(hookUrl, message)
-    }
-  })
-} catch (Error) {
-  console.error(Error)
-  core.setFailed(Error)
-}
+      }
+    })
+  } catch (Error) {
+    console.error(Error)
+    core.setFailed(Error)
+  }
+})()
