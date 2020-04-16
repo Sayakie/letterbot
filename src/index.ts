@@ -116,6 +116,7 @@ try {
   if (rawWEBHOOKS == null) throw new ReferenceError('❌ Could not find webhook list!')
 
   const WEBHOOKS = rawWEBHOOKS.trim().split(',')
+  // @ts-ignore
   const result = []
 
   (async () => {
@@ -147,8 +148,8 @@ try {
     console.log('✅ Parsed google news data successfully.')
   })()
 
-  WEBHOOKS.map(async hookUrl => {
-    const today = new Date().toLocaleDateString('ko-KR', { timeZone: 'Asia/Seoul' }).split(/.?\s/).map(s => s.padStart(2, 0))
+  WEBHOOKS.map(async (hookUrl: string) => {
+    const today = new Date().toLocaleDateString('ko-KR', { timeZone: 'Asia/Seoul' }).split(/.?\s/).map((s: string) => s.padStart(2, 0))
 
     if (hookUrl.includes('discordapp.com')) {
       const message: any = {
