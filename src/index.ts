@@ -150,6 +150,7 @@ try {
         embeds: []
       }
 
+      console.log(JSON.stringify(result, null, 2))
       message.embeds.push({
         color: config.embedColor,
         description: `좋은 아침입니다, 사령관님. ${today[0]}년 ${today[1]}월 ${today[2]}일 보고입니다.`,
