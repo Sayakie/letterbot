@@ -22,9 +22,9 @@ interface Error {
 process.on('uncaughtException', Error =>
   throw new Error(`Uncaught exception occured! Details in: ${Error.stack || Error}`)
 )
-process.on('unhandledRejection', (Error: Error) =>
+process.on('unhandledRejection', (Error: Error) => {
   throw new Error(`Unhandled rejection occured! Details in: ${Error.stack ||| Error}`)
-)
+})
 
 function isArray(arrayLike: T): arrayLike is T[] {
   return (<T[]>arrayLike).join !== undefined
