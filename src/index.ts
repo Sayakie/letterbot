@@ -103,14 +103,13 @@ const weatherMatchData = {
 
 const googleNewsUrl = 'https://news.google.com/rss?hl=ko&gl=KR&ceid=KR:ko'
 
-(async () => {
+;(async () => {
   try {
     const { WEBHOOKS: rawWEBHOOKS, WEATHER_API_KEY } = process.env
     if (rawWEBHOOKS == null) throw new ReferenceError('❌ Could not find webhook list!')
 
     const WEBHOOKS = rawWEBHOOKS.trim().split(',')
-    // @ts-ignore
-    const result: any[] = [];
+    const result: any[] = []
 
     // Parse weather data
     const weatherResponse = await axios.get(`${weatherUrl}?q=${config.cityName}&appid=${WEATHER_API_KEY}&units=metric`)
