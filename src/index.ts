@@ -1,12 +1,14 @@
 //- Configuration scope
 type configType = {
   cityName: string | string[],
-  embedColor: string
+  cityLocaleName: string,
+  embedColor: number
 }
 
 const config: configType = {
   cityName: 'Mokpo',
-  embedColor: '#0099cc'
+  cityLocaleName: '목포',
+  embedColor: 7506394
 }
 
 //- Source code
@@ -19,9 +21,9 @@ interface Error {
   stack?: string[]
 }
 
-process.on('uncaughtException', Error =>
+process.on('uncaughtException', Error => {
   throw new Error(`Uncaught exception occured! Details in: ${Error.stack || Error}`)
-)
+})
 process.on('unhandledRejection', (Error: Error) => {
   throw new Error(`Unhandled rejection occured! Details in: ${Error.stack ||| Error}`)
 })
@@ -156,14 +158,14 @@ try {
       }
 
       message.embeds.push({
-        color: 7506394,
+        color: config.embedColor,
         description: `좋은 아침입니다, 사령관님. ${today[0]}년 ${today[1]}월 ${today[2].slice(0, -1)}일 보고입니다.`,
         fields: [{
-          name: '🏞️ 날씨 / 목포',
+          name: `🏞️ 날씨 / ${config.cityLocaleName}`,
           value: result[0].weather,
           inline: true
         }, {
-          name: '🌡 온도 / 목포',
+          name: `🌡 온도 / ${config.cityLocaleName}`,
           value: result[0].temperature,
           inline: true
         }, {
