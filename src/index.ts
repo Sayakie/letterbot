@@ -141,7 +141,7 @@ try {
   })()
 
   WEBHOOKS.map(async (hookUrl: string) => {
-    const today = new Date().toLocaleDateString('ko-KR', { timeZone: 'Asia/Seoul' }).split(/.?\s/).map((s: string) => s.padStart(2, '0'))
+    const today = new Date().toLocaleDateString('ko-KR', { timeZone: 'Asia/Seoul' }).replace(/\./g, '').split(/\s/).map((s: string) => s.padStart(2, '0'))
 
     if (hookUrl.includes('discordapp.com')) {
       const message: any = {
