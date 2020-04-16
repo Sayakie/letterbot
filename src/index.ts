@@ -21,11 +21,11 @@ interface Error {
   stack?: string[]
 }
 
-process.on('uncaughtException', Error => {
-  throw new Error(`Uncaught exception occured! Details in: ${Error.stack || Error}`)
+process.on('uncaughtException', error => {
+  throw new Error(`Uncaught exception occured! Details in: ${error.stack || error}`)
 })
-process.on('unhandledRejection', (Error: Error) => {
-  throw new Error(`Unhandled rejection occured! Details in: ${Error.stack || Error}`)
+process.on('unhandledRejection', (error: Error) => {
+  throw new Error(`Unhandled rejection occured! Details in: ${error.stack || error}`)
 })
 
 function isArray(arrayLike: T): arrayLike is T[] {
