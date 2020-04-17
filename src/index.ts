@@ -147,15 +147,11 @@ const velogTrendUrl = 'https://velog.io/'
     // Parse velog trending top 5 posts
     const velogTrendResponse = await axios.get(velogTrendUrl)
     const velogRawData = String(velogTrendResponse.data)
-    const $velog = cheerio.load(velogRawData, {
-      gzip: true,
-      json: true,
-      ...cheerioOptions
-    })
+    const $velog = cheerio.load(velogRawData, cheerioOptions)
 
     const velogPosts: string[] = $velog('h4')
-    const velogTitles: string[] = velogPosts.map(element => element.innerText)
-    const velogLinks: string[] = velogPosts.map(element => element.parentElement.href)
+    const velogTitles: string[] = velogPosts.map((_, element) => $velog(element).text()).get()
+    const velogLinks: string[] = velogPosts.map((_, element) => $velog(element).parentElement().attr('href')).get()
 
     content = ''
     for (let i = 0; i < 5; i++) {
