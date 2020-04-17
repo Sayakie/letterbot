@@ -151,7 +151,7 @@ const velogTrendUrl = 'https://velog.io/'
 
     const velogPosts = $velog('h4')
     const velogTitles: string[] = velogPosts.map((_, element) => $velog(element).text()).get()
-    const velogLinks: string[] = velogPosts.map((_, element) => $velog(element).parentNode().attr('href')).get()
+    const velogLinks: string[] = velogPosts.map((_, element) => $velog(element).parent().attr('href')).get()
 
     content = ''
     for (let i = 0; i < 5; i++) {
