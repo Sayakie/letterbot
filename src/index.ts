@@ -149,9 +149,9 @@ const velogTrendUrl = 'https://velog.io/'
     const velogRawData = String(velogTrendResponse.data)
     const $velog = cheerio.load(velogRawData, cheerioOptions)
 
-    const velogPosts: string[] = $velog('h4')
+    const velogPosts = $velog('h4')
     const velogTitles: string[] = velogPosts.map((_, element) => $velog(element).text()).get()
-    const velogLinks: string[] = velogPosts.map((_, element) => $velog(element).parentElement().attr('href')).get()
+    const velogLinks: string[] = velogPosts.map((_, element) => $velog(element).parentNode().attr('href')).get()
 
     content = ''
     for (let i = 0; i < 5; i++) {
