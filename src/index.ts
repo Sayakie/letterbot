@@ -101,7 +101,12 @@ const weatherMatchData = {
   "962":"🌪 허리케인"
 }
 
+const cheerioOptions = {
+  xmlMode: true
+}
+
 const googleNewsUrl = 'https://news.google.com/rss?hl=ko&gl=KR&ceid=KR:ko'
+const velogTrendUrl = 'https://velog.io/'
 
 ;(async () => {
   try {
@@ -110,6 +115,7 @@ const googleNewsUrl = 'https://news.google.com/rss?hl=ko&gl=KR&ceid=KR:ko'
 
     const WEBHOOKS = rawWEBHOOKS.trim().split(',')
     const result: any[] = []
+    let content = ''
 
     // Parse weather data
     const weatherResponse = await axios.get(`${weatherUrl}?q=${config.cityName}&appid=${WEATHER_API_KEY}&units=metric`)
@@ -125,18 +131,39 @@ const googleNewsUrl = 'https://news.google.com/rss?hl=ko&gl=KR&ceid=KR:ko'
     // Parse google news data
     const newsResponse = await axios.get(googleNewsUrl)
     const newsRawData = String(newsResponse.data)
-    const $ = cheerio.load(newsRawData, { xmlMode: true })
+    const $news = cheerio.load(newsRawData, { cheerioOptions })
 
-    const titles: string[] = $('item > title').map((_, element) => $(element).text()).get()
-    const links: string[] = $('item > link').map((_, element) => $(element).text()).get()
-    let content = ''
+    const newsTitles: string[] = $news('item > title').map((_, element) => $news(element).text()).get()
+    const newsLinks: string[] = $news('item > link').map((_, element) => $news(element).text()).get()
 
+    content = ''
     for (let i = 0; i < 3; i++) {
-      content += `[${titles[i]}](${links[i]})\n`
+      content += `[${newsTitles[i]}](${newsLinks[i]})\n`
     }
 
     result.push(content)
     console.log('✅ Parsed google news data successfully.')
+
+    // Parse velog trending top 5 posts
+    const velogTrendResponse = await axios.get(velogTrendUrl)
+    const velogRawData = String(velogTrendResponse.data)
+    const $velog = cheerio.load(velogRawData, {
+      gzip: true,
+      json: true,
+      ...cheerioOptions
+    })
+
+    const velogPosts: string[] = $velog('h4')
+    const velogTitles: string[] = velogPosts.map(element => element.innerText)
+    const velogLinks: string[] = velogPosts.map(element => element.parentElement.href)
+
+    content = ''
+    for (let i = 0; i < 5; i++) {
+      content += `[${velogTitles[i]}](${velogLinks[i]})\n`
+    }
+
+    result.push(content)
+    console.log(`✅ Parsed velog trending top 5 posts data successfully.`)
 
     WEBHOOKS.map(async (hookUrl: string) => {
       const today = new Date().toLocaleDateString('ko-KR', { timeZone: 'Asia/Seoul' }).replace(/\./g, '').split(/\s/).map((s: string) => s.padStart(2, '0'))
@@ -163,6 +190,9 @@ const googleNewsUrl = 'https://news.google.com/rss?hl=ko&gl=KR&ceid=KR:ko'
           }, {
             name: '📰 뉴스 / 구글',
             value: result[1]
+          }, {
+            name: '📰 트렌드 포스트 / 벨로그',
+            value: result[2]
           }]
         })
       
