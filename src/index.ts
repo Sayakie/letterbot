@@ -124,14 +124,14 @@ const velogTrendUrl = 'https://velog.io/'
 
     result.push({
       weather: (<any> weatherMatchData)[weather[0].id],
-      temperature: `(최소 ${temperature.temp_min}도 ~ ${temperature.temp_max}도)`
+      temperature: `(최소 ${temperature.temp_min}도 ~ 최대 ${temperature.temp_max}도)`
     })
     console.log('✅ Parsed weather data successfully.')
 
     // Parse google news data
     const newsResponse = await axios.get(googleNewsUrl)
     const newsRawData = String(newsResponse.data)
-    const $news = cheerio.load(newsRawData, { cheerioOptions })
+    const $news = cheerio.load(newsRawData, cheerioOptions)
 
     const newsTitles: string[] = $news('item > title').map((_, element) => $news(element).text()).get()
     const newsLinks: string[] = $news('item > link').map((_, element) => $news(element).text()).get()
@@ -166,7 +166,8 @@ const velogTrendUrl = 'https://velog.io/'
     console.log(`✅ Parsed velog trending top 5 posts data successfully.`)
 
     WEBHOOKS.map(async (hookUrl: string) => {
-      const today = new Date().toLocaleDateString('ko-KR', { timeZone: 'Asia/Seoul' }).replace(/\./g, '').split(/\s/).map((s: string) => s.padStart(2, '0'))
+      const rawToday = new Date().toLocaleDateString('ko-KR', { timeZone: 'Asia/Seoul' })
+      const today = rawToday.split('/').map((s: string) => s.padStart(2, '0'))
 
       if (hookUrl.includes('discordapp.com')) {
         const message: any = {
@@ -178,7 +179,7 @@ const velogTrendUrl = 'https://velog.io/'
         console.log(JSON.stringify(result, null, 2))
         message.embeds.push({
           color: config.embedColor,
-          description: `좋은 아침입니다, 사령관님. ${today[0]}년 ${today[1]}월 ${today[2]}일 보고입니다.`,
+          description: `좋은 아침입니다, 사령관님. ${today[2]}년 ${today[0]}월 ${today[1]}일 보고입니다.`,
           fields: [{
             name: `🏞️ 날씨 / ${config.cityLocaleName}`,
             value: result[0].weather,
