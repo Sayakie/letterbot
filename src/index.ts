@@ -24,6 +24,10 @@ process.on('unhandledRejection', (error: any) => {
   throw new Error(`Unhandled rejection occured! Details in: ${error.stack || error}`)
 })
 
+function escapeString(text: string) {
+  return text.replace(/[-[\]{}()*+?.,\\^$|#\\s]/g, '\\$&')
+}
+
 const weatherUrl = 'http://api.openweathermap.org/data/2.5/weather'
 const weatherMatchData = {
   "200":"🌧 가벼운 비를 동반한 천둥구름",
@@ -133,8 +137,8 @@ const velogTrendUrl = 'https://velog.io/'
     const newsRawData = String(newsResponse.data)
     const $news = cheerio.load(newsRawData, cheerioOptions)
 
-    const newsTitles: string[] = $news('item > title').map((_, element) => $news(element).text()).get()
-    const newsLinks: string[] = $news('item > link').map((_, element) => $news(element).text()).get()
+    const newsTitles: string[] = escapeString($news('item > title').map((_, element) => $news(element).text()).get())
+    const newsLinks: string[] = escapestring($news('item > link').map((_, element) => $news(element).text()).get())
 
     content = ''
     for (let i = 0; i < 3; i++) {
@@ -150,12 +154,12 @@ const velogTrendUrl = 'https://velog.io/'
     const $velog = cheerio.load(velogRawData, cheerioOptions)
 
     const velogPosts = $velog('h4')
-    const velogTitles: string[] = velogPosts.map((_, element) => $velog(element).text()).get()
-    const velogLinks: string[] = velogPosts.map((_, element) => $velog(element).parent().attr('href')).get()
+    const velogTitles: string[] = escapeString(velogPosts.map((_, element) => $velog(element).text()).get())
+    const velogLinks: string[] = escapestring(velogPosts.map((_, element) => $velog(element).parent().attr('href')).get())
 
     content = ''
     for (let i = 0; i < 5; i++) {
-      content += `[${velogTitles[i]}](encodeURIComponent(https://velog.io${velogLinks[i]}))\n`
+      content += `[${velogTitles[i]}](https://velog.io${velogLinks[i]})\n`
     }
 
     result.push(content)
