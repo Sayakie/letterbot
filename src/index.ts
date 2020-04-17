@@ -155,7 +155,7 @@ const velogTrendUrl = 'https://velog.io/'
 
     content = ''
     for (let i = 0; i < 5; i++) {
-      content += `[${velogTitles[i]}](${velogLinks[i]})\n`
+      content += `[${velogTitles[i]}](encodeURIComponent(https://velog.io${velogLinks[i]}))\n`
     }
 
     result.push(content)
