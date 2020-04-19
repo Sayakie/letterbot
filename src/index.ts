@@ -113,8 +113,6 @@ const googleNewsUrl = 'https://news.google.com/rss?hl=ko&gl=KR&ceid=KR:ko'
 const velogTrendUrl = 'https://velog.io/'
 
 
-await Promise.resolve(console.log('🎉 Test for async/await in top-level'));
-
 ;(async () => {
   try {
     const { WEBHOOKS: rawWEBHOOKS, WEATHER_API_KEY } = process.env
@@ -200,8 +198,7 @@ await Promise.resolve(console.log('🎉 Test for async/await in top-level'));
           }]
         })
       
-        //await axios.post(hookUrl, message)
-        console.log(hookUrl, message)
+        await axios.post(hookUrl, message)
       }
     })
   } catch (Error) {
