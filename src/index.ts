@@ -1,13 +1,9 @@
 //- Configuration scope
-type configType = {
-  cityName: string | string[],
-  cityLocaleName: string,
+type configType = 
   embedColor: number
 }
 
 const config: configType = {
-  cityName: 'Mokpo',
-  cityLocaleName: '목포',
   embedColor: 7506394
 }
 
@@ -123,13 +119,20 @@ const velogTrendUrl = 'https://velog.io/'
     let content = ''
 
     // Parse weather data
-    const weatherResponse = await axios.get(`${weatherUrl}?q=${config.cityName}&appid=${WEATHER_API_KEY}&units=metric`)
-    const weatherRawData = weatherResponse.data
-    const { weather, main: temperature} = weatherRawData
+    const weatherMokpoResponse = await axios.get(`${weatherUrl}?q=Mokpo&appid=${WEATHER_API_KEY}&units=metric`)
+    const weatherMokpoRawData = weatherMokpoResponse.data
+    const { weather: mokpoWeather, main: mokpoTemperature} = weatherMokpoRawData
+    const weatherUlsanResponse = await axios.get(`${weatherUrl}?q=Ulsan&appid=${WEATHER_API_KEY}&units=metric`)
+    const weatherUlsanRawData = weatherUlsanResponse.data
+    const { weather: ulsanWeather, main: ulsanTemperature} = weatherUlsanRawData
 
     result.push({
-      weather: (<any> weatherMatchData)[weather[0].id],
-      temperature: `(최소 ${temperature.temp_min}도 ~ 최대 ${temperature.temp_max}도)`
+      weather: (<any> weatherMatchData)[mokpoWeather[0].id],
+      temperature: `(최소 ${mokpoTemperature.temp_min}도 ~ 최대 ${mokpoTemperature.temp_max}도)`
+    })
+    result.push({
+      weather: (<any> weatherMatchData)[ulsanWeather[0].id],
+      temperature: `(최소 ${ulsanTemperature.temp_min}도 ~ 최대 ${ulsanTemperature.temp_max}도)`
     })
     console.log('✅ Parsed weather data successfully.')
 
@@ -182,19 +185,27 @@ const velogTrendUrl = 'https://velog.io/'
           color: config.embedColor,
           description: `좋은 아침입니다, 사령관님. ${today[2]}년 ${today[0]}월 ${today[1]}일 보고입니다.`,
           fields: [{
-            name: `🏞️ 날씨 / ${config.cityLocaleName}`,
+            name: `🏞️ 날씨 / 목포`,
             value: result[0].weather,
             inline: true
           }, {
-            name: `🌡 온도 / ${config.cityLocaleName}`,
+            name: `🌡 온도 / 목포`,
             value: result[0].temperature,
             inline: true
           }, {
+            name: `🏞️ 날씨 / 울산`,
+            value: result[1].weather,
+            inline: true
+          }, {
+            name: `🌡 온도 / 울산`,
+            value: result[1].temperature,
+            inline: true
+          }, {
             name: '📰 뉴스 / 구글',
-            value: result[1]
+            value: result[2]
           }, {
             name: '📰 트렌드 포스트 / 벨로그',
-            value: result[2]
+            value: result[3]
           }]
         })
       
