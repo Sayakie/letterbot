@@ -12,7 +12,6 @@
     "type": "git",
     "url": "git+https://github.com/cjaewon/letterbot.git"
   },
-  "type": "module",
   "keywords": [
     "letterbot",
     "github",
