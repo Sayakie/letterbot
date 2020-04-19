@@ -1,5 +1,5 @@
 //- Configuration scope
-type configType = 
+type configType = {
   embedColor: number
 }
 
