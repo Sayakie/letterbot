@@ -193,8 +193,8 @@ const velogTrendUrl = 'https://velog.io/'
             value: result[0].temperature,
             inline: true
           }, {
-            name: '',
-            value: '',
+            name: '‎',
+            value: '‎',
             inline: true
           }, {
             name: `🏞️ 날씨 / 울산`,
@@ -205,20 +205,20 @@ const velogTrendUrl = 'https://velog.io/'
             value: result[1].temperature,
             inline: true
           }, {
-            name: '',
-            value: '',
+            name: '‎',
+            value: '‎',
             inline: true
           }, {
-            name: '',
-            value: '',
+            name: '‎',
+            value: '‎',
             inline: true
           }, {
-            name: '',
-            value: '',
+            name: '‎',
+            value: '‎',
             inline: true
           }, {
-            name: '',
-            value: '',
+            name: '‎',
+            value: '‎',
             inline: true
           }, {
             name: '📰 뉴스 / 구글',
