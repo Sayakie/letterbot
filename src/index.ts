@@ -175,15 +175,16 @@ const velogTrendUrl = 'https://velog.io/'
 
       if (hookUrl.includes('discordapp.com')) {
         const message: any = {
-          username: '부관',
-          avatar_url: 'https://i.imgur.com/diJEYhI.jpg',
+          username: '감염된 부관',
+          // avatar_url: 'https://i.imgur.com/diJEYhI.jpg',
+          avatar_url: 'https://i.imgur.com/m1zwJWY.jpg',
           embeds: []
         }
 
         console.log(JSON.stringify(result, null, 2))
         message.embeds.push({
           color: config.embedColor,
-          description: `좋은 아침입니다, 사령관님. ${today[2]}년 ${today[0]}월 ${today[1]}일 보고입니다.`,
+          description: `사냥하기 좋은 날입니다, 여왕님. ${today[2]}년 ${today[0]}월 ${today[1]}일 보고입니다.`,
           fields: [{
             name: `🏞️ 날씨 / 목포`,
             value: result[0].weather,
