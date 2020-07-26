@@ -175,17 +175,19 @@ const velogTrendUrl = 'https://velog.io/'
 
       if (hookUrl.includes('discordapp.com')) {
         const message: any = {
-          username: '집행관',
+          username: '콧코로',
           // avatar_url: 'https://i.imgur.com/diJEYhI.jpg', // 테란 부관
           // avatar_url: 'https://i.imgur.com/m1zwJWY.jpg', // 저그 감염된 부관
-          avatar_url: 'https://i.imgur.com/UrRo8HN.jpg',
+          // avatar_url: 'https://i.imgur.com/UrRo8HN.jpg', // 프로토스 집행관
+          // avatar_url: 'https://i.imgur.com/KsNkmTB.jpg', // 멍뭉이
+          avatar_url: 'https://i.imgur.com/AMrrpL7.jpg',
           embeds: []
         }
 
         console.log(JSON.stringify(result, null, 2))
         message.embeds.push({
           color: config.embedColor,
-          description: `엔 타로 아둔! 집행관님! 칼라가 우릴 인도합니다. ${today[2]}년 ${today[0]}월 ${today[1]}일 보고입니다.`,
+          description: `주인님, 좋은 아침입니다. ${today[2]}년 ${today[0]}월 ${today[1]}일 보고입니다.`,
           fields: [{
             name: `🏞️ 날씨 / 목포`,
             value: result[0].weather,
