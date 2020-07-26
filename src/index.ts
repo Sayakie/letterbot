@@ -180,7 +180,7 @@ const velogTrendUrl = 'https://velog.io/'
           // avatar_url: 'https://i.imgur.com/m1zwJWY.jpg', // 저그 감염된 부관
           // avatar_url: 'https://i.imgur.com/UrRo8HN.jpg', // 프로토스 집행관
           // avatar_url: 'https://i.imgur.com/KsNkmTB.jpg', // 멍뭉이
-          avatar_url: 'https://i.imgur.com/AMrrpL7.jpg',
+          avatar_url: 'https://i.imgur.com/cg7cEQj.png',
           embeds: []
         }
 
