@@ -4,7 +4,7 @@ type configType = {
 }
 
 const config: configType = {
-  embedColor: 7506394
+  embedColor: 4416480
 }
 
 //- Source code
@@ -173,21 +173,46 @@ const velogTrendUrl = 'https://velog.io/'
       const rawToday = new Date().toLocaleDateString('ko-KR', { timeZone: 'Asia/Seoul' })
       const today = rawToday.split('/').map((s: string) => s.padStart(2, '0'))
 
+      const branchMessage = (mokpoWeather[0].id == 800 || ulsanWeather[0].id == 800) ? '날씨가 좋은 관계로' : '날씨가 그리 좋지 않지만'
+      const branchPXUsedTime = ~~(Math.random() * 4) + 12
+      const branchPXUsedOutTime = branchPXUsedTime + 2
+      const fortuneSmile = ~~(Math.random() * 10) + 1
+      let fortuneSmileMessage: string
+      
+      switch (fortuneSmile) {
+        case 7:
+          fortuneSmileMessage = '\n\n그리고 대대장님 지시 사항으로 전 병력 두발 정리\n단정하게 하도록 지시하셨으니까 오늘 내로\n두발 정리 실시하고 완료된 생활관은 분대장이\n행정반에 와서 보고할 수 있도록 한다.'
+          break
+        case 8:
+          fortuneSmileMessage = '\n\n그리고 다음 주에 사격 훈련이 있는 관계로\n금일 일석 점호는 총기 점호를 실시하겠다.'
+          break
+        case 9:
+          fortuneSmileMessage = '\n\n금일 당직사관이 돌아다니면서 검사할거니까\n한 사람도 빠짐없이 할 수 있도록. 안 한 생활관 있으면\n그 생활관은 휴식군기 미비로 개인정비 없다.'
+          break
+        case 10:
+          fortuneSmileMessage = `\n\n금일 출타 인원이랑 없는 인원들이 많이 있으니까 옆 사람이 대신해주고\n${Boolean(!!~~(Math.random() * 2)) ? '점심' : '저녁'} 먹고 일광건조한거 원위치시키고 개인정비 하도록 한다.`
+          break
+        default:
+          fortuneSmileMessage = '\n\n아울러 전 생활관 선임 분대장들은 지금 즉시 총기함키 수령해갈 수 있도록.'
+          break
+      }
+
       if (hookUrl.includes('discordapp.com')) {
         const message: any = {
-          username: '콧코로',
+          username: '당직사관,
           // avatar_url: 'https://i.imgur.com/diJEYhI.jpg', // 테란 부관
           // avatar_url: 'https://i.imgur.com/m1zwJWY.jpg', // 저그 감염된 부관
           // avatar_url: 'https://i.imgur.com/UrRo8HN.jpg', // 프로토스 집행관
           // avatar_url: 'https://i.imgur.com/KsNkmTB.jpg', // 멍뭉이
-          avatar_url: 'https://i.imgur.com/cg7cEQj.png',
+          // avatar_url: 'https://i.imgur.com/cg7cEQj.png', // 콧코로
+          avatar_url: 'https://i.imgur.com/1LihyUl_d.webp?maxwidth=728&fidelity=grand',
           embeds: []
         }
 
-        console.log(JSON.stringify(result, null, 2))
+        // console.log(JSON.stringify(result, null, 2))
         message.embeds.push({
           color: config.embedColor,
-          description: `주인님, 좋은 아침입니다. ${today[2]}년 ${today[0]}월 ${today[1]}일 보고입니다.`,
+          description: `후━─후... 아─ 아──. 행정반에서 당직 사관이 전파한다.\n${today[2]}년 ${today[0]}월 ${today[1]}일 현재시각 공팔시 정각.\n금일 ${branchMessage} ${branchPXUsedTime}시부터 ${branchPXUsedOutTime}시까지\nPX 및 싸지방 이용, TV 시청 중지하고 전 병력 담당 구역 청소 및\n침구류 일광 소독을 실시할 수 있도록 한다.${fortuneSmileMessage}\n이상 전달 끝.`,
           fields: [{
             name: `🏞️ 날씨 / 목포`,
             value: result[0].weather,
