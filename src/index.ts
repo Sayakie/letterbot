@@ -199,7 +199,7 @@ const velogTrendUrl = 'https://velog.io/'
 
       if (hookUrl.includes('discordapp.com')) {
         const message: any = {
-          username: '당직사관,
+          username: '당직사관',
           // avatar_url: 'https://i.imgur.com/diJEYhI.jpg', // 테란 부관
           // avatar_url: 'https://i.imgur.com/m1zwJWY.jpg', // 저그 감염된 부관
           // avatar_url: 'https://i.imgur.com/UrRo8HN.jpg', // 프로토스 집행관
